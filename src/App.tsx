@@ -12,6 +12,9 @@ function App() {
   const [showContent, setShowContent] = useState(false);
   const weddingDate = new Date("2025-07-12T00:00:00.000Z");
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const guestName = searchParams.get("to");
+
   const calculateTimeLeft = () => {
     const difference = +weddingDate - +new Date();
     const timeLeft = {
@@ -45,6 +48,11 @@ function App() {
             Kami mengundang Anda untuk merayakan hari bahagia kami
           </p>
           <p className="font-serif text-2xl text-gray-700">12 Juli 2025</p>
+          {guestName && (
+            <p className="text-lg text-gray-700">
+              Kepada Yth. <span className="font-semibold">{guestName}</span>
+            </p>
+          )}
           <div className="grid grid-cols-4 gap-4 max-w-md mx-auto">
             <div className="bg-white p-3 rounded-lg shadow-md">
               <div className="text-2xl font-bold text-rose-400">
