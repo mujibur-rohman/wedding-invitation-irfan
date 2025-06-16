@@ -82,7 +82,7 @@ function App() {
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="space-y-6 animate-fade-in isolate mt-28">
             <Heart className="w-16 h-16 text-rose-400 mx-auto animate-pulse" />
-            <h1 className="font-serif text-4xl md:text-6xl text-gray-800">
+            <h1 className="font-serif text-4xl md:text-6xl text-white">
               Irfan & Dewi
             </h1>
             <p className="text-white">
