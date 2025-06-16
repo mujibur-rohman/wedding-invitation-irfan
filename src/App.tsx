@@ -359,10 +359,10 @@ function App() {
                   </div>
                 </div>
               </div>
-
+              {/* -6,1709250, 106,9666940 */}
               <div className="pt-8">
                 <a
-                  href="https://goo.gl/maps/example"
+                  href="https://www.google.com/maps?q=-6.1709250,106.9666940"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-rose-400 text-white rounded-full hover:bg-rose-500 transition-all shadow-lg"
