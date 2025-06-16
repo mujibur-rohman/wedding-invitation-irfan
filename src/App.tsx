@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Heart,
@@ -6,6 +7,8 @@ import {
   Gift,
   Clock,
   ChevronDown,
+  VolumeX,
+  Volume2,
 } from "lucide-react";
 
 function App() {
@@ -28,6 +31,31 @@ function App() {
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const [muted, setMuted] = useState(false);
+
+  React.useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.5;
+      const playAudio = async () => {
+        try {
+          await audio.play();
+        } catch {
+          console.warn("Autoplay was prevented. User interaction needed.");
+        }
+      };
+      playAudio();
+    }
+  }, []);
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !muted;
+      setMuted(!muted);
+    }
+  };
+
   React.useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
@@ -37,55 +65,69 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50 to-rose-100">
+      <audio ref={audioRef} src="/music.mp3" loop autoPlay />
+      <button
+        onClick={toggleMute}
+        className="fixed z-50 bottom-4 right-4 bg-white text-black p-2 rounded-full shadow-lg hover:bg-gray-100 transition"
+        aria-label={muted ? "Unmute" : "Mute"}
+      >
+        {muted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+      </button>
       {/* Cover Section */}
-      <section className="h-screen flex flex-col items-center justify-center relative text-center px-4">
-        <div className="space-y-6 animate-fade-in">
-          <Heart className="w-16 h-16 text-rose-400 mx-auto animate-pulse" />
-          <h1 className="font-serif text-4xl md:text-6xl text-gray-800">
-            Irfan & Dewi
-          </h1>
-          <p className="text-gray-600">
-            Kami mengundang Anda untuk merayakan hari bahagia kami
-          </p>
-          <p className="font-serif text-2xl text-gray-700">12 Juli 2025</p>
-          {guestName && (
-            <p className="text-lg text-gray-700">
-              Kepada Yth. <span className="font-semibold">{guestName}</span>
+      <section className="h-screen flex flex-col items-center justify-center relative text-center">
+        <div
+          className="relative min-h-screen bg-cover bg-center w-full"
+          style={{ backgroundImage: "url('/1.jpeg')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-50" />
+          <div className="space-y-6 animate-fade-in isolate mt-28">
+            <Heart className="w-16 h-16 text-rose-400 mx-auto animate-pulse" />
+            <h1 className="font-serif text-4xl md:text-6xl text-gray-800">
+              Irfan & Dewi
+            </h1>
+            <p className="text-white">
+              Kami mengundang Anda untuk merayakan hari bahagia kami
             </p>
-          )}
-          <div className="grid grid-cols-4 gap-4 max-w-md mx-auto">
-            <div className="bg-white p-3 rounded-lg shadow-md">
-              <div className="text-2xl font-bold text-rose-400">
-                {timeLeft.days}
+            <p className="font-serif text-2xl text-white">12 Juli 2025</p>
+            {guestName && (
+              <p className="text-lg text-white">
+                Kepada Yth. <span className="font-semibold">{guestName}</span>
+              </p>
+            )}
+            <div className="grid grid-cols-4 gap-4 max-w-md mx-auto">
+              <div className="bg-white p-3 rounded-lg shadow-md">
+                <div className="text-2xl font-bold text-rose-400">
+                  {timeLeft.days}
+                </div>
+                <div className="text-sm text-gray-600">Hari</div>
               </div>
-              <div className="text-sm text-gray-600">Hari</div>
-            </div>
-            <div className="bg-white p-3 rounded-lg shadow-md">
-              <div className="text-2xl font-bold text-rose-400">
-                {timeLeft.hours}
+              <div className="bg-white p-3 rounded-lg shadow-md">
+                <div className="text-2xl font-bold text-rose-400">
+                  {timeLeft.hours}
+                </div>
+                <div className="text-sm text-gray-600">Jam</div>
               </div>
-              <div className="text-sm text-gray-600">Jam</div>
-            </div>
-            <div className="bg-white p-3 rounded-lg shadow-md">
-              <div className="text-2xl font-bold text-rose-400">
-                {timeLeft.minutes}
+              <div className="bg-white p-3 rounded-lg shadow-md">
+                <div className="text-2xl font-bold text-rose-400">
+                  {timeLeft.minutes}
+                </div>
+                <div className="text-sm text-gray-600">Menit</div>
               </div>
-              <div className="text-sm text-gray-600">Menit</div>
-            </div>
-            <div className="bg-white p-3 rounded-lg shadow-md">
-              <div className="text-2xl font-bold text-rose-400">
-                {timeLeft.seconds}
+              <div className="bg-white p-3 rounded-lg shadow-md">
+                <div className="text-2xl font-bold text-rose-400">
+                  {timeLeft.seconds}
+                </div>
+                <div className="text-sm text-gray-600">Detik</div>
               </div>
-              <div className="text-sm text-gray-600">Detik</div>
             </div>
-          </div>
-          <div className="mb-16">
-            <button
-              onClick={() => setShowContent(true)}
-              className="px-8 py-3 bg-rose-400 text-white rounded-full hover:bg-rose-500 transition-all shadow-lg"
-            >
-              Buka Undangan
-            </button>
+            <div className="mb-16">
+              <button
+                onClick={() => setShowContent(true)}
+                className="px-8 py-3 bg-rose-400 text-white rounded-full hover:bg-rose-500 transition-all shadow-lg"
+              >
+                Buka Undangan
+              </button>
+            </div>
           </div>
         </div>
 
