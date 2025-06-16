@@ -287,7 +287,7 @@ function App() {
                     </p>
                     <p className="flex items-center justify-center gap-2">
                       <MapPin className="w-5 h-5" />
-                      KUA Cilincing
+                      KUA Cakung Timur
                     </p>
                   </div>
                 </div>
