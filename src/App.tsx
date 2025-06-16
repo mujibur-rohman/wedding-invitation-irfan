@@ -34,21 +34,6 @@ function App() {
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const [muted, setMuted] = useState(false);
 
-  React.useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.5;
-      const playAudio = async () => {
-        try {
-          await audio.play();
-        } catch {
-          console.warn("Autoplay was prevented. User interaction needed.");
-        }
-      };
-      playAudio();
-    }
-  }, []);
-
   const toggleMute = () => {
     if (audioRef.current) {
       audioRef.current.muted = !muted;
@@ -80,7 +65,7 @@ function App() {
           style={{ backgroundImage: "url('/1.jpeg')" }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50" />
-          <div className="space-y-6 animate-fade-in isolate mt-28">
+          <div className="space-y-6 animate-fade-in isolate mt-28 px-4">
             <Heart className="w-16 h-16 text-rose-400 mx-auto animate-pulse" />
             <h1 className="font-serif text-4xl md:text-6xl text-white">
               Irfan & Dewi
@@ -122,7 +107,23 @@ function App() {
             </div>
             <div className="mb-16">
               <button
-                onClick={() => setShowContent(true)}
+                onClick={() => {
+                  const audio = audioRef.current;
+                  if (audio) {
+                    audio.volume = 0.5;
+                    const playAudio = async () => {
+                      try {
+                        await audio.play();
+                      } catch {
+                        console.warn(
+                          "Autoplay was prevented. User interaction needed."
+                        );
+                      }
+                    };
+                    playAudio();
+                  }
+                  setShowContent(true);
+                }}
                 className="px-8 py-3 bg-rose-400 text-white rounded-full hover:bg-rose-500 transition-all shadow-lg"
               >
                 Buka Undangan
