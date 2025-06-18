@@ -326,7 +326,7 @@ function App() {
                     </p>
                     <p className="flex items-center justify-center gap-2">
                       <Clock className="w-5 h-5" />
-                      00:00 - Selesai
+                      09:00 - Selesai
                     </p>
                     <p className="flex items-center justify-center gap-2">
                       <MapPin className="w-5 h-5" />
